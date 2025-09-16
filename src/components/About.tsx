@@ -18,14 +18,24 @@ const fadeInUp: Variants = {
 };
 
 const About = () => {
+  const { t, i18n } = useTranslation();
+
+  const handleDownload = () => {
+    const lang = i18n.language; // "es" o "en"
+    const fileName = lang === "es" ? "cv.pdf" : "cv-eng.pdf";
+
+    const link = document.createElement("a");
+    link.href = `/${fileName}`;
+    link.download = fileName;
+    link.click();
+  };
+
   const controls = useAnimation();
   const { ref, inView } = useInView({ threshold: 0.2, triggerOnce: true });
 
   useEffect(() => {
     if (inView) controls.start("visible");
   }, [controls, inView]);
-
-  const { t } = useTranslation();
 
   return (
     <section
@@ -66,15 +76,18 @@ const About = () => {
 
       {/* Botón animado */}
       <motion.div
-        initial="hidden"
-        animate={controls}
-        variants={fadeInUp}
-        className="mt-4"
-      >
-        <IconButton text={t("download-cv")} iconSrc="icons/cv.svg" alt="Curriculum icon"
-          onClick={() => window.open("/cv.pdf", "_blank")}
-        />
-      </motion.div>
+      initial="hidden"
+      animate={controls}
+      variants={fadeInUp}
+      className="mt-4"
+    >
+      <IconButton
+        text={t("download-cv")}
+        iconSrc="icons/cv.svg"
+        alt="Curriculum icon"
+        onClick={handleDownload}
+      />
+    </motion.div>
     </section>
   );
 };
