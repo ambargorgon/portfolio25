@@ -25,7 +25,7 @@ const Hero = () => {
       <h1 className="font-title z-10 text-center py-8 mt-16 text-3xl md:text-5xl xl:text-7xl xl:mt-20">
         {t("title")}
       </h1>
-      <div className="absolute z-0 bg-gradient-to-r from-[#BDBB87] via-[#A9A974] to-[#B17E53] w-full mr-[30%] h-36"></div>
+      <div className="absolute z-0 sm:bg-gradient-to-r from-[#BDBB87] via-[#A9A974] to-[#B17E53] w-full border-b-1 bg-[#bbba862c] mr-0 border-white sm:mr-[30%] h-36"></div>
 
       {/* Subtítulo */}
       <h6 className="font-bold lowercase text-2xl md:text-4xl xl:text-5xl -tracking-widest text-center md:text-right md:self-end md:mr-12 xl:mr-24">

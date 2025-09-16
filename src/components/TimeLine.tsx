@@ -16,14 +16,14 @@ const Timeline: React.FC = () => {
           description={t("job1-description")}
         />
         <TimelineItem
-          title={t("jobw-title")}
-          date={t("jobw-date")}
-          description={t("jobw-description")}
+          title={t("job2-title")}
+          date={t("job2-date")}
+          description={t("job2-description")}
         />
         <TimelineItem
-          title={t("jobe-title")}
-          date={t("jobe-date")}
-          description={t("jobe-description")}
+          title={t("job3-title")}
+          date={t("job3-date")}
+          description={t("job3-description")}
         />
       </div>
     </div>
