@@ -5,6 +5,7 @@ import Projects from './components/ProjectSection'
 import Tecnologias from './components/Tecnologias'
 import About from './components/About'
 import Footer from './components/Footer'
+import "./i18n.js";
 
 function App() {
 

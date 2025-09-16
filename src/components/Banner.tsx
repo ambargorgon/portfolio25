@@ -1,13 +1,15 @@
+import { useTranslation } from "react-i18next";
 import IconButton from "./common/Button"
 
 const Banner = () => {
+  const { t } = useTranslation();
+
   return (
     <>
       {/* Contenedor principal */}
       <div className="bg-[#B27B50] w-full md:w-[80%] xl:w-[70%] p-8 md:p-16 xl:p-20 flex justify-center md:justify-end">
-        <p className="text-2xl md:text-3xl xl:text-5xl font-bold leading-snug tracking-tight text-center md:text-right max-w-[90%] md:max-w-[80%]">
-          Técnica en programación con +3 años de experiencia en desarrollo. 
-          Especializada en soluciones FrontEnd y diseños atractivos.
+        <p className="whitespace-pre-line text-2xl md:text-3xl xl:text-5xl font-bold leading-snug tracking-tight text-center md:text-right max-w-[90%] md:max-w-[80%]">
+        {t("banner")}
         </p>
       </div>
 

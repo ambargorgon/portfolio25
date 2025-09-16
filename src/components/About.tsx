@@ -3,6 +3,8 @@ import { motion, useAnimation, type Variants, type Transition } from "framer-mot
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import IconButton from "./common/Button";
+import { useTranslation } from "react-i18next";
+import { Trans } from "react-i18next";
 
 const spring: Transition = {
   type: "spring",
@@ -23,6 +25,8 @@ const About = () => {
     if (inView) controls.start("visible");
   }, [controls, inView]);
 
+  const { t } = useTranslation();
+
   return (
     <section
       ref={ref}
@@ -35,7 +39,7 @@ const About = () => {
         variants={fadeInUp}
         className="w-full md:w-[80%] border-b border-white font-bold text-center pb-2 text-2xl md:text-3xl"
       >
-        Sobre Mi
+        {t("about-me")}
       </motion.h3>
 
       {/* Contenido principal */}
@@ -45,22 +49,13 @@ const About = () => {
         variants={fadeInUp}
         className="flex flex-col md:flex-row items-center justify-center gap-10 py-10"
       >
-        <p className="w-full md:w-[60%] text-base md:text-lg font-medium leading-relaxed text-center md:text-left">
-          Hola 👋, soy <span className="font-bold">Ambar Gorgon</span>, Técnica en
-          Programación y desarrolladora FrontEnd.
-          <br />
-          <br /> Me apasiona crear interfaces atractivas y funcionales, y también
-          tengo experiencia trabajando con backends y bases de datos, lo que me
-          permite entender los proyectos de forma integral. Además, gracias a mi
-          formación, puedo documentar y planificar cada etapa buscando siempre
-          la ruta más óptima.
-          <br />
-          <br /> Creo que cada idea merece una solución a medida, por eso me
-          gusta escuchar, conversar y encontrar la mejor forma de transformarla
-          en una experiencia digital única. 🚀
-          <br />
-          <br /> Si tenés un proyecto en mente, ¡me encantaría charlarlo y
-          pensar cómo hacerlo realidad!
+        <p className="lg:w-[45%] md:w-[60%]  text-base md:text-lg font-medium leading-relaxed text-center md:text-left whitespace-pre-line">
+          <Trans i18nKey="about-me-text"
+            components={{
+              0: <br />, // cada <0/> será reemplazado por un <br/>
+              1: <span className="font-bold" /> // <1>texto</1> será un span bold
+            }}
+          />
         </p>
         <img
           src="/images/avatar-1.webp"
@@ -76,8 +71,8 @@ const About = () => {
         variants={fadeInUp}
         className="mt-4"
       >
-        <IconButton text="Currículum" iconSrc="icons/cv.svg" alt="Curriculum icon"           
-        onClick={() => window.open("/cv.pdf", "_blank")}
+        <IconButton text={t("download-cv")} iconSrc="icons/cv.svg" alt="Curriculum icon"
+          onClick={() => window.open("/cv.pdf", "_blank")}
         />
       </motion.div>
     </section>

@@ -1,16 +1,24 @@
+import { Trans, useTranslation } from "react-i18next";
 
 
 const Footer = () => {
+  const { t } = useTranslation();
+
   return (
     <footer className="bg-[#b27256] text-white py-10 mt-16">
       <div className="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6 border-t border-white/40 pt-6">
-        
+
         {/* Izquierda */}
         <div className="text-center md:text-left">
-          <h3 className="text-xl font-bold mb-2">Contáctame</h3>
+          <h3 className="text-xl font-bold mb-2">{t("contact")}</h3>
           <p className="text-sm opacity-80">
-            Portfolio Ambar Gorgon © {new Date().getFullYear()} <br />
-            Desarrollado en <span className="font-semibold">React</span>
+            {t("portfolio")} © {new Date().getFullYear()} <br />
+            <Trans i18nKey="developer"
+              components={{
+                1: <span className="font-bold" /> // <1>texto</1> será un span bold
+              }}
+            />
+
           </p>
         </div>
 

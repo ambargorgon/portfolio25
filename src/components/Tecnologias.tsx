@@ -3,6 +3,7 @@ import { motion, useAnimation, type Variants, type Transition } from "framer-mot
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import TechButton from "./common/TechButton"; // tu componente de botón
+import { useTranslation } from "react-i18next";
 
 // Tipamos la transición correctamente
 const spring: Transition = {
@@ -45,11 +46,12 @@ const Tecnologias: React.FC = () => {
     }
   }, [controls, inView]);
 
+  const { t } = useTranslation();
+
   return (
     <section className="py-12 md:px-8 lg:px-16">
         <h3 className="w-[90%] border-b-1 font-bold pl-36 my-16 pb-2 text-2xl border-white">
-
-        Tecnologías
+       {t("technologies")}
       </h3>
 
       <motion.div
