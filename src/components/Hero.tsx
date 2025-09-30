@@ -35,12 +35,15 @@ const Hero = () => {
       </div>
 
       {/* Scroll indicator */}
-      <div className="hidden md:flex absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+      {/* mouse */}
+      <div className="hidden md:flex absolute bottom-8 left-1/2 animate-bounce">
         <div className="w-6 h-10 border-2 border-[#2D4A2B] rounded-full flex justify-center">
           <div className="w-1 h-3 bg-[#2D4A2B] rounded-full mt-2 animate-pulse"></div>
         </div>
       </div>
-      <div className="md:hidden absolute bottom-6 left-1/2 -translate-x-1/2 animate-bounce">
+
+      {/* flecha */}
+     <div className="md:hidden absolute bottom-6 -translate-x-1/2 animate-bounce">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="w-8 h-8 text-[#2D4A2B]"
@@ -53,8 +56,6 @@ const Hero = () => {
         </svg>
       </div>
     </div>
-
-
   );
 };
 

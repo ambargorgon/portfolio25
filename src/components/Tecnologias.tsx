@@ -1,4 +1,3 @@
-// src/components/TechCarousel.tsx
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTranslation } from "react-i18next";
@@ -62,8 +61,8 @@ const TechCarousel = () => {
   const prev = () => setIndex((prev) => (prev - 1 + sections.length) % sections.length);
 
   const startAutoSlide = () => {
-    if (!isMobile && !intervalRef.current) {
-      intervalRef.current = setInterval(next, 2400);
+    if (!intervalRef.current) {
+      intervalRef.current = setInterval(next, isMobile ? 3000 : 2400); // 👈 móvil 1s, pc 2.4s
     }
   };
 
@@ -82,18 +81,16 @@ const TechCarousel = () => {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  // Autoplay solo en desktop
+  // Autoplay siempre (ahora también en móvil)
   useEffect(() => {
-    if (!isMobile) {
-      startAutoSlide();
-    }
+    startAutoSlide();
     return () => stopAutoSlide();
   }, [isMobile]);
 
   return (
     <>
-<h3 className="w-[90%] border-b-2 font-bold pl-36 mt-16 mb-8 pb-2 text-2xl border-white/50">      
- {t("technologies")}
+      <h3 className="w-[90%] border-b-2 font-bold pl-36 mt-16 mb-8 pb-2 text-2xl border-white/50">
+        {t("technologies")}
       </h3>
 
       <div
@@ -109,7 +106,7 @@ const TechCarousel = () => {
             initial="enter"
             animate="center"
             exit="exit"
-            transition={{ duration: 0.6 }}
+            transition={{ duration: isMobile ? 1 : 0.6 }} // 👈 duración distinta
             className="absolute flex flex-col items-center justify-center w-full px-4"
           >
             <h2 className="text-3xl md:text-5xl font-bold mb-6 md:mb-10">
@@ -121,7 +118,11 @@ const TechCarousel = () => {
                   key={i}
                   className="flex items-center gap-2 text-base md:text-lg hover:scale-110 transition-transform cursor-pointer"
                 >
-                  <img src={item.icon} alt={item.name} className="w-6 h-6 md:w-8 md:h-8" />
+                  <img
+                    src={item.icon}
+                    alt={item.name}
+                    className="w-6 h-6 md:w-8 md:h-8"
+                  />
                   <span>{item.name}</span>
                 </div>
               ))}

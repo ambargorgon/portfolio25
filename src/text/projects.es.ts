@@ -46,7 +46,7 @@ const projects: Project[] = [
     description:
       "Plataforma web fullstack para pedidos online, gestión de productos y panel administrativo.",
     about:
-      "El Buen Sabor es un sistema completo de ventas gastronómicas con integración de carrito con <1>Mercado Pago</1>, gestión de usuarios con OAuth0, base de datos MySQL<br/> <br/> Contiene un panel administrativo con seguimiento de pedidos en tiempo real mediante WebSockets, estadísticas, control de stock, gestión de empleados y más. <br/> Desarrollado en equipo a partir de <1>historias de usuario y metodología SCRUM",
+      "El Buen Sabor es un sistema completo de ventas gastronómicas con integración de carrito con <1>Mercado Pago</1>, gestión de usuarios con OAuth0 y base de datos MySQL. <br/> <br/> Contiene un panel administrativo con seguimiento de pedidos en tiempo real mediante WebSockets, estadísticas, control de stock, gestión de empleados y más. <br/> Desarrollado en equipo a partir de <1>historias de usuario y metodología SCRUM",
     rol: "Fui parte activa tanto en el área de diseño —incluyendo la creación del logo y la experiencia UX/UI— como en el desarrollo del frontend con <1>Next.js, TypeScript y Tailwind</1>, trabajando siempre en conjunto con el equipo para alinear usabilidad y estética de la marca.",
     date: "Marzo 2025 - Julio 2025",
     team: "4 desarrolladores",
