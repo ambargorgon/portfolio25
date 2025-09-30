@@ -19,11 +19,8 @@ const IconButton: React.FC<IconButtonProps> = ({
   return (
     <button
       onClick={onClick}
-      className={`
-        flex items-center gap-2 px-10 py-4 rounded-md border 
-        border-white text-white  bg-[rgba(255,255,255,0.3)]  
-        hover:scale-105 hover:shadow-lg hover:cursor-pointer transition-all duration-300 shadow-[2.012px_2.617px_0_0_rgba(255,255,255,1)]
-        ${className}
+      className={`flex items-center gap-3 px-6 py-3 bg-[#dddddd25] rounded-xl shadow-lg hover:brightness-110 transition duration-200"> 
+         ${className}
       `}
     >
       <img src={iconSrc} alt={alt} className="w-5 h-5" />

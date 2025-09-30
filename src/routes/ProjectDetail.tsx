@@ -3,17 +3,22 @@ import { Trans, useTranslation } from "react-i18next";
 import { Link, useParams } from "react-router-dom";
 import projectsEs from "../text/projects.es";
 import projectsEn from "../text/projects.en";
-import IconButton from "../common/Button";
-import Carousel from "../common/Carrousel";
+import IconButton from "../components/common/Button";
+import TechCarousel from "../components/Tecnologias";
+import HeaderProject from "../components/HeaderProject";
+import Carousel from "../components/common/Carrousel";
+import Contact from "../components/Contact";
+
 
 export default function ProjectDetail() {
+
+  
   const { t, i18n } = useTranslation();
   const { id } = useParams<{ id: string }>();
 
   const projects = i18n.language === "es" ? projectsEs : projectsEn;
   const project = projects.find((p) => p.id === id);
 
-  const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   if (!project) {
     return (
@@ -26,60 +31,9 @@ export default function ProjectDetail() {
     );
   }
 
-  const handlePrev = () =>
-    setActiveIndex((prev) =>
-      prev !== null ? (prev - 1 + project.gallery.length) % project.gallery.length : null
-    );
-  const handleNext = () =>
-    setActiveIndex((prev) =>
-      prev !== null ? (prev + 1) % project.gallery.length : null
-    );
-
   return (
     <div className="mx-auto p-4 sm:p-6 md:p-10 lg:p-12 max-w-7xl flex flex-col gap-12">
-      {/* HEADER */}
-      <header className=" pt-24 flex flex-col md:flex-row md:items-center gap-6 w-full">
-        {/* Info */}
-        <div className="flex-1 space-y-4 text-center md:text-left">
-          <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold">{project.title}</h1>
-          <p className="text-base sm:text-lg md:text-xl">{project.description}</p>
-
-          <div className="flex flex-wrap justify-center md:justify-start gap-3 mt-2">
-            {project.tags.map((tag, idx) => (
-              <IconButton
-                key={idx}
-                text={tag}
-                iconSrc={`/icons/${tag.toLowerCase()}.svg`}
-                alt={`${tag} icon`}
-              />
-            ))}
-          </div>
-
-          <div className="flex flex-wrap justify-center md:justify-start items-center gap-4 text-sm mt-4">
-            <div className="flex items-center gap-2">
-              <img src="/icons/calendar.svg" alt="calendar" className="w-5 sm:w-6" />
-              <span>{project.date}</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <img src="/icons/team.svg" alt="team" className="w-5 sm:w-6" />
-              <span>{project.team}</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <img src="/icons/target.svg" alt="rol" className="w-5 sm:w-6" />
-              <span>{project.target}</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Imagen */}
-        <div className="flex-1 flex justify-center md:justify-end mt-6 md:mt-0">
-          <img
-            src={project.image}
-            alt={project.title}
-            className="object-contain w-[80%] sm:w-[60%] md:w-[90%] rounded-xl shadow-lg"
-          />
-        </div>
-      </header>
+     <HeaderProject />
 
       <div className="w-full border-t border-white"></div>
 
@@ -149,50 +103,7 @@ export default function ProjectDetail() {
         />
       )
       }
-
-
-      {/* CONTACTO */}
-      <div className="flex flex-col items-center justify-center mt-10 text-center">
-        <h3 className="text-2xl sm:text-3xl font-bold">{t("project.interested")}</h3>
-        <p className="text-base sm:text-lg my-4">{t("project.contact")}</p>
-        <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 my-3">
-          <IconButton
-            text="Gmail"
-            iconSrc="/icons/mail.svg"
-            alt="Email icon"
-            onClick={() => window.open("mailto:ambargorgon@gmail.com", "_blank")}
-          />
-
-          {project.codeUrl && (
-            <button
-              className="flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-2 sm:py-3 bg-white rounded-xl shadow-lg hover:brightness-110 transition duration-200"
-              onClick={() => window.open(project.codeUrl, "_blank")}
-            >
-              <img src="/icons/github.svg" alt="github" className="w-5 h-5 filter invert" />
-              <p className="text-black font-bold text-sm sm:text-base">{t("project.codeButton")}</p>
-            </button>
-          )}
-
-          {project.prototypeUrl && (
-            <button
-              className="flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-2 sm:py-3 bg-white rounded-xl shadow-lg hover:brightness-110 transition duration-200"
-              onClick={() => window.open(project.prototypeUrl, "_blank")}
-            >
-              <img src="/icons/figma.svg" alt="figma" className="w-5 h-5 filter invert" />
-              <p className="text-black font-bold text-sm sm:text-base">{t("project.prototypeButton")}</p>
-            </button>
-          )}
-          {project.linkUrl && (
-            <button
-              className="flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-2 sm:py-3 bg-white rounded-xl shadow-lg hover:brightness-110 transition duration-200"
-              onClick={() => window.open(project.linkUrl, "_blank")}
-            >
-              <img src="/icons/url.svg" alt="figma" className="w-5 h-5 filter invert" />
-              <p className="text-black font-bold text-sm sm:text-base">{t("project.linkButton")}</p>
-            </button>
-          )}
-        </div>
-      </div>
+ <Contact />
 
       {/* VOLVER */}
       <div className="text-center mt-6">
