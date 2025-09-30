@@ -32,7 +32,7 @@ const projects: Project[] = [
     linkUrl: "https://chimi-menu-adaptado.vercel.app/",
     reverse: true,
     gallery: [
-      { type: "video", src: "/videos/demo-chimi.mp4" },
+      { type: "video", src: "/videos/demo-chimi.wemb" },
       { type: "image", src: "/images/galeria-chimi/1.webp" },
       { type: "image", src: "/images/galeria-chimi/2.webp" },
       { type: "image", src: "/images/galeria-chimi/3.webp" },
@@ -54,7 +54,7 @@ const projects: Project[] = [
     tags: ["Next.js", "Typescript", "SpringBoot", "MySQL", "WebSockets", "MercadoPago"],
     codeUrl: "https://github.com/Maiten-Oviedo/ElBuenSaborFrontend",
     gallery: [
-      { type: "video", src: "/videos/demo-buensabor.mp4" },
+      { type: "video", src: "/videos/demo-buensabor.webm" },
       { type: "image", src: "/images/galeria-buensabor/1.webp" },
       { type: "image", src: "/images/galeria-buensabor/2.webp" },
       { type: "image", src: "/images/galeria-buensabor/3.webp" },
@@ -79,7 +79,7 @@ const projects: Project[] = [
     tags: ["Figma", "Material Design"],
     reverse: true,
     gallery: [
-      { type: "video", src: "/videos/demo-segno.mp4" },
+      { type: "video", src: "/videos/demo-segno.webm" },
       { type: "image", src: "/images/galeria-segno/1.webp" },
       { type: "image", src: "/images/galeria-segno/2.webp" },
       { type: "image", src: "/images/galeria-segno/3.webp" },
