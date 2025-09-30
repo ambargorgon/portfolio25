@@ -24,7 +24,7 @@ const projects: Project[] = [
       "Menú digital de restaurante adaptado para personas con discapacidad.",
     about:
       "Diseño y desarrollo de un <1>Menú Digital Accesible</1> para personas con discapacidad, con mejoras de usabilidad e incorporación de contenido en videos de lengua de señas. <br/> También cuenta con usabilidad a través de <1>TalkBack</1>, iconografía personalizada y colores con contrastes <1>AAA</1>. <br/>Construido con React y prototipado en Figma, el proyecto busca brindar acceso igualitario a la información gastronómica.",
-    rol: "Me encargué del diseño teniendo en cuenta las pautas WCAG, y generando <1>+50 iconos vectorizados </1> para la navegación en el menú. <br> Luego, guioné y edité los videos junto a una <1>intérprete de señas</1>. <br>El desarrollo lo llevé a cabo con supervisión de profesionales del área, poniendo con foco en la accesibilidad, creando un menú dinámico en React y asegurando el cumplimiento de las pautas básicas de WCAG.",
+    rol: "Me encargué del diseño teniendo en cuenta las pautas WCAG, y generando <1>+50 iconos vectorizados </1> para la navegación en el menú. <br> Luego, guioné y edité los videos junto a una <1>intérprete de señas</1>. <br>El desarrollo lo llevé a cabo con supervisión de profesionales del área, poniendo el foco en la accesibilidad, creando un menú dinámico en React y asegurando el cumplimiento de las pautas básicas de WCAG.",
     date: "Julio 2024 - Septiembre 2024",
     team: "Proyecto individual",
     target: "Diseño & Frontend",
@@ -45,8 +45,7 @@ const projects: Project[] = [
     title: "El Buen Sabor - Ecommerce & ERP gastronómico",
     description:
       "Plataforma web fullstack para pedidos online, gestión de productos y panel administrativo.",
-    about:
-      "El Buen Sabor es un sistema completo de ventas gastronómicas con integración de carrito con <1>Mercado Pago</1>, gestión de usuarios con OAuth0 y base de datos MySQL. <br/> <br/> Contiene un panel administrativo con seguimiento de pedidos en tiempo real mediante WebSockets, estadísticas, control de stock, gestión de empleados y más. <br/> Desarrollado en equipo a partir de <1>historias de usuario y metodología SCRUM",
+    about:"El Buen Sabor es un sistema completo de ventas gastronómicas con integración de carrito con <1>Mercado Pago</1>, gestión de usuarios con OAuth0 y base de datos MySQL. <br/> <br/> Contiene un panel administrativo con seguimiento de pedidos en tiempo real mediante WebSockets, estadísticas, control de stock, gestión de empleados y más. <br/> Desarrollado en equipo a partir de <1>historias de usuario y metodología SCRUM",
     rol: "Fui parte activa tanto en el área de diseño —incluyendo la creación del logo y la experiencia UX/UI— como en el desarrollo del frontend con <1>Next.js, TypeScript y Tailwind</1>, trabajando siempre en conjunto con el equipo para alinear usabilidad y estética de la marca.",
     date: "Marzo 2025 - Julio 2025",
     team: "4 desarrolladores",
