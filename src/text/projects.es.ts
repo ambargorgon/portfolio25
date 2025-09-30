@@ -78,7 +78,7 @@ const projects: Project[] = [
     prototypeUrl: "https://www.behance.net/gallery/158654637/Segno-Diseno-UX_UI",
     tags: ["Figma", "Material Design"],
     reverse: true,
-    gallery: [{ type: "video", src: "/videos/demo-segno.wemb" },
+    gallery: [ { type: "video", src: "/videos/demo-segno.webm" },
       { type: "image", src: "/images/galeria-segno/1.webp" },
       { type: "image", src: "/images/galeria-segno/2.webp" },
       { type: "image", src: "/images/galeria-segno/3.webp" },
