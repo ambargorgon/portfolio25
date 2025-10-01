@@ -88,16 +88,7 @@ interface BandProps {
 }
 
 function Band({ maxSpeed = 50, minSpeed = 0 }: BandProps) {
-  const [curve] = useState(
-    () =>
-      new THREE.CatmullRomCurve3([
-        new THREE.Vector3(0, 0, 0),
-        new THREE.Vector3(0.5, 0, 0),
-        new THREE.Vector3(1, 0, 0),
-        new THREE.Vector3(1.5, 0, 0),
-      ])
-  );
-  
+
 
   // Using "any" for refs since the exact types depend on Rapier's internals
   const band = useRef<any>(null);
@@ -125,7 +116,16 @@ function Band({ maxSpeed = 50, minSpeed = 0 }: BandProps) {
 
   const [dragged, drag] = useState<false | THREE.Vector3>(false);
   const [hovered, hover] = useState(false);
-
+  const [curve] = useState(
+    () =>
+      new THREE.CatmullRomCurve3([
+        new THREE.Vector3(0, 0, 0),
+        new THREE.Vector3(0.5, 0, 0),
+        new THREE.Vector3(1, 0, 0),
+        new THREE.Vector3(1.5, 0, 0),
+      ])
+  );
+  
   const [isSmall, setIsSmall] = useState<boolean>(() => {
     if (typeof window !== 'undefined') {
       return window.innerWidth < 1024;
@@ -160,28 +160,27 @@ function Band({ maxSpeed = 50, minSpeed = 0 }: BandProps) {
       };
     }
   }, [hovered, dragged]);
-
   useFrame((state, delta) => {
     if (
+      !band.current ||
+      !band.current.geometry ||
       !j1.current ||
       !j2.current ||
       !j3.current ||
       !fixed.current ||
       !card.current
     ) {
-      return; // aún no están listos
+      return;
     }
-
-
   
-    const t1 = j1.current.translation();
-    const t2 = j2.current.translation();
-    const t3 = j3.current.translation();
-    const tf = fixed.current.translation();
+    const t1 = j1.current.translation?.();
+    const t2 = j2.current.translation?.();
+    const t3 = j3.current.translation?.();
+    const tf = fixed.current.translation?.();
   
-    if (!t1 || !t2 || !t3 || !tf) return; // evita NaN
+    if (!t1 || !t2 || !t3 || !tf) return;
   
-    // asegura que lerped exista
+    // actualización de lerp
     [j1, j2].forEach((ref) => {
       if (!ref.current.lerped)
         ref.current.lerped = new THREE.Vector3().copy(ref.current.translation());
@@ -195,17 +194,26 @@ function Band({ maxSpeed = 50, minSpeed = 0 }: BandProps) {
       );
     });
   
-    // asigna puntos a la curva
+    // actualizar curva
     curve.points[0].copy(t3);
     curve.points[1].copy(j2.current.lerped);
     curve.points[2].copy(j1.current.lerped);
     curve.points[3].copy(tf);
   
-    // asegura que la mesh tenga geometry
-    if (band.current && band.current.geometry && curve.getPoints) {
-      band.current.geometry.setPoints(curve.getPoints(32));
+    // aplicar puntos
+    const pts = curve.getPoints(32);
+    if (pts.every((p) => Number.isFinite(p.x) && Number.isFinite(p.y))) {
+      band.current.geometry.setPoints(pts);
     }
   });
+  
+
+  const initialPoints = [
+    new THREE.Vector3(0, 0, 0),
+    new THREE.Vector3(0.5, 0, 0),
+    new THREE.Vector3(1, 0, 0),
+    new THREE.Vector3(1.5, 0, 0),
+  ];
   
   return (
     <>
@@ -258,7 +266,7 @@ function Band({ maxSpeed = 50, minSpeed = 0 }: BandProps) {
       </group>
       <mesh ref={band}>
         {/* @ts-ignore */}
-        <meshLineGeometry />
+        <meshLineGeometry  points={initialPoints} />
         {/* @ts-ignore */}
         <meshLineMaterial
           color="white"
