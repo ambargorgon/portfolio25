@@ -9,11 +9,19 @@ declare module '*.svg';
 import { MeshLineGeometry, MeshLineMaterial } from 'meshline';
 import { BufferGeometryNode, MaterialNode } from '@react-three/fiber';
 
-declare global {
-  namespace JSX {
-    interface IntrinsicElements {
-      meshLineGeometry: BufferGeometryNode<MeshLineGeometry, typeof MeshLineGeometry>;
-      meshLineMaterial: MaterialNode<MeshLineMaterial, typeof MeshLineMaterial>;
-    }
+declare namespace JSX {
+  interface IntrinsicElements {
+    meshLineMaterial: React.ComponentProps<'mesh'> & {
+      color?: string | number | THREE.Color;
+      lineWidth?: number;
+      resolution?: [number, number];
+      map?: THREE.Texture;
+      repeat?: [number, number];
+      depthTest?: boolean;
+      useMap?: boolean;
+    };
+    meshLineGeometry: React.ComponentProps<'mesh'> & {
+      points: THREE.Vector3[];
+    };
   }
 }

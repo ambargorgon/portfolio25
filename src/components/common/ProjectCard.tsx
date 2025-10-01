@@ -19,14 +19,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   reverse = false,
 }) => {
   return (
-    <Link
-      to={`/project/${id}`}
-      className={`group flex flex-col md:flex-row rounded-lg px-6 py-4 items-center gap-6 my-6 transition duration-300 transform 
-        hover:scale-[1.02] hover:shadow-lg hover:shadow-white/20 cursor-pointer
-        border border-white/10 shadow-sm md:border-0 md:shadow-none
-        ${reverse ? "md:flex-row-reverse md:self-end" : "md:self-start"}`}
-    >
-      {/* Imagen */}
+    <>
       <div className="relative">
         <img
           src={image}
@@ -44,7 +37,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
         </div>
       </div>
 
-      {/* Texto + Botón en mobile */}
+
       <div className="text-left max-w-md w-full flex flex-col gap-3">
         <h3 className="text-xl font-semibold text-white">{title}</h3>
 
@@ -69,8 +62,8 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
           </div>
         </div>
       </div>
-    </Link>
-  );
+    </>
+  )
 };
 
 export default ProjectCard;

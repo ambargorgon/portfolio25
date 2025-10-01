@@ -202,11 +202,21 @@ function Band({ maxSpeed = 50, minSpeed = 0 }: BandProps) {
   
     // aplicar puntos
     const pts = curve.getPoints(32);
-    if (pts.every((p) => Number.isFinite(p.x) && Number.isFinite(p.y))) {
+    if (pts.every(p =>
+      Number.isFinite(p.x) &&
+      Number.isFinite(p.y) &&
+      Number.isFinite(p.z)
+    )) {
       band.current.geometry.setPoints(pts);
+    } else {
+      // Fallback para evitar NaN en producción
+      band.current.geometry.setPoints(initialPoints);
     }
+
+    band.current.geometry.computeBoundingSphere();
+
+    band.current.geometry.boundingSphere = null;
   });
-  
 
   const initialPoints = [
     new THREE.Vector3(0, 0, 0),
