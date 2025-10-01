@@ -1,5 +1,6 @@
 import { useTranslation } from "react-i18next";
-import Lanyard from "./Lanyard";
+import LanyardVercel from "./LanyardVercel.jsx"
+
 
 const Hero = () => {
   const { t } = useTranslation();
@@ -16,7 +17,7 @@ const Hero = () => {
     md:absolute md:inset-0 md:justify-center 
   "
       >
-        <Lanyard position={[0, 0, 15]} gravity={[0, -40, 0]} />
+        <LanyardVercel />
       </div>
 
       {/* Texto */}

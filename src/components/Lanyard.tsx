@@ -88,8 +88,6 @@ interface BandProps {
 }
 
 function Band({ maxSpeed = 50, minSpeed = 0 }: BandProps) {
-
-
   // Using "any" for refs since the exact types depend on Rapier's internals
   const band = useRef<any>(null);
   const fixed = useRef<any>(null);
@@ -113,18 +111,12 @@ function Band({ maxSpeed = 50, minSpeed = 0 }: BandProps) {
 
   const { nodes, materials } = useGLTF(cardGLB) as any;
   const texture = useTexture(lanyard);
-
-  const [dragged, drag] = useState<false | THREE.Vector3>(false);
-  const [hovered, hover] = useState(false);
   const [curve] = useState(
     () =>
-      new THREE.CatmullRomCurve3([
-        new THREE.Vector3(0, 0, 0),
-        new THREE.Vector3(0.5, 0, 0),
-        new THREE.Vector3(1, 0, 0),
-        new THREE.Vector3(1.5, 0, 0),
-      ])
+      new THREE.CatmullRomCurve3([new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3()])
   );
+  const [dragged, drag] = useState<false | THREE.Vector3>(false);
+  const [hovered, hover] = useState(false);
 
   const [isSmall, setIsSmall] = useState<boolean>(() => {
     if (typeof window !== 'undefined') {
@@ -150,8 +142,6 @@ function Band({ maxSpeed = 50, minSpeed = 0 }: BandProps) {
     [0, 1.45, 0]
   ]);
 
-
-
   useEffect(() => {
     if (hovered) {
       document.body.style.cursor = dragged ? 'grabbing' : 'grab';
@@ -160,90 +150,45 @@ function Band({ maxSpeed = 50, minSpeed = 0 }: BandProps) {
       };
     }
   }, [hovered, dragged]);
+
   useFrame((state, delta) => {
-    const pts = curve.getPoints(32);
-    if (pts.every(p => Number.isFinite(p.x) && Number.isFinite(p.y))) {
-      band.current.geometry.setPoints(pts);
+    if (dragged && typeof dragged !== 'boolean') {
+      vec.set(state.pointer.x, state.pointer.y, 0.5).unproject(state.camera);
+      dir.copy(vec).sub(state.camera.position).normalize();
+      vec.add(dir.multiplyScalar(state.camera.position.length()));
+      [card, j1, j2, j3, fixed].forEach(ref => ref.current?.wakeUp());
+      card.current?.setNextKinematicTranslation({
+        x: vec.x - dragged.x,
+        y: vec.y - dragged.y,
+        z: vec.z - dragged.z
+      });
     }
-    if (
-      pts.every(p =>
-        Number.isFinite(p.x) &&
-        Number.isFinite(p.y) &&
-        Number.isFinite(p.z)
-      )
-    ) {
-      band.current.geometry.setPoints(pts);
-    } else {
-      // Fallback seguro para que no entre en bucle de NaN
-      band.current.geometry.setPoints(initialPoints);
+    if (fixed.current) {
+      [j1, j2].forEach(ref => {
+        if (!ref.current.lerped) ref.current.lerped = new THREE.Vector3().copy(ref.current.translation());
+        const clampedDistance = Math.max(0.1, Math.min(1, ref.current.lerped.distanceTo(ref.current.translation())));
+        ref.current.lerped.lerp(
+          ref.current.translation(),
+          delta * (minSpeed + clampedDistance * (maxSpeed - minSpeed))
+        );
+      });
+      curve.points[0].copy(j3.current.translation());
+      curve.points[1].copy(j2.current.lerped);
+      curve.points[2].copy(j1.current.lerped);
+      curve.points[3].copy(fixed.current.translation());
+      band.current.geometry.setPoints(curve.getPoints(32));
+      ang.copy(card.current.angvel());
+      rot.copy(card.current.rotation());
+      card.current.setAngvel({ x: ang.x, y: ang.y - rot.y * 0.25, z: ang.z });
     }
-
-    if (
-      !band.current ||
-      !band.current.geometry ||
-      !j1.current ||
-      !j2.current ||
-      !j3.current ||
-      !fixed.current ||
-      !card.current
-    ) {
-      return;
-    }
-
-    const t1 = j1.current.translation?.();
-    const t2 = j2.current.translation?.();
-    const t3 = j3.current.translation?.();
-    const tf = fixed.current.translation?.();
-
-    if (!t1 || !t2 || !t3 || !tf) return;
-
-    // actualización de lerp
-    [j1, j2].forEach((ref) => {
-      if (!ref.current.lerped)
-        ref.current.lerped = new THREE.Vector3().copy(ref.current.translation());
-      const clampedDistance = Math.max(
-        0.1,
-        Math.min(1, ref.current.lerped.distanceTo(ref.current.translation()))
-      );
-      ref.current.lerped.lerp(
-        ref.current.translation(),
-        delta * (minSpeed + clampedDistance * (maxSpeed - minSpeed))
-      );
-    });
-
-    // actualizar curva
-    curve.points[0].copy(t3);
-    curve.points[1].copy(j2.current.lerped);
-    curve.points[2].copy(j1.current.lerped);
-    curve.points[3].copy(tf);
-
-    // aplicar puntos
-    if (pts.every(p =>
-      Number.isFinite(p.x) &&
-      Number.isFinite(p.y) &&
-      Number.isFinite(p.z)
-    )) {
-      band.current.geometry.setPoints(pts);
-    } else {
-      // Fallback para evitar NaN en producción
-      band.current.geometry.setPoints(initialPoints);
-    }
-
-    band.current.geometry.computeBoundingSphere();
-
-    band.current.geometry.boundingSphere = null;
   });
 
-  const initialPoints = [
-    new THREE.Vector3(0, 0, 0),
-    new THREE.Vector3(0.5, 0, 0),
-    new THREE.Vector3(1, 0, 0),
-    new THREE.Vector3(1.5, 0, 0),
-  ];
+  curve.curveType = 'chordal';
+  texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
 
   return (
     <>
-      <group position={isSmall ? [2, 4, 0] : [2, 4, 0]}>
+      <group position={[2, 4, 0]}>
         <RigidBody ref={fixed} {...segmentProps} type={'fixed' as RigidBodyProps['type']} />
         <RigidBody position={[0.5, 0, 0]} ref={j1} {...segmentProps} type={'dynamic' as RigidBodyProps['type']}>
           <BallCollider args={[0.1]} />
@@ -290,18 +235,18 @@ function Band({ maxSpeed = 50, minSpeed = 0 }: BandProps) {
           </group>
         </RigidBody>
       </group>
-      <mesh ref={band} raycast={() => null}>
+      <mesh ref={band}>
         {/* @ts-ignore */}
-        <meshLineGeometry points={initialPoints} />
+        <meshLineGeometry />
         {/* @ts-ignore */}
         <meshLineMaterial
           color="white"
           depthTest={false}
-          resolution={isSmall ? [500, 1000] : [1000, 1000]}
+          resolution={isSmall ? [1000, 2000] : [1000, 1000]}
           useMap
           map={texture}
           repeat={[-4, 1]}
-          lineWidth={isSmall ? 0.5 : 1}
+          lineWidth={1}
         />
       </mesh>
     </>
