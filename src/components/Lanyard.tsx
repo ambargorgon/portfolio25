@@ -125,7 +125,7 @@ function Band({ maxSpeed = 50, minSpeed = 0 }: BandProps) {
         new THREE.Vector3(1.5, 0, 0),
       ])
   );
-  
+
   const [isSmall, setIsSmall] = useState<boolean>(() => {
     if (typeof window !== 'undefined') {
       return window.innerWidth < 1024;
@@ -161,6 +161,23 @@ function Band({ maxSpeed = 50, minSpeed = 0 }: BandProps) {
     }
   }, [hovered, dragged]);
   useFrame((state, delta) => {
+    const pts = curve.getPoints(32);
+    if (pts.every(p => Number.isFinite(p.x) && Number.isFinite(p.y))) {
+      band.current.geometry.setPoints(pts);
+    }
+    if (
+      pts.every(p =>
+        Number.isFinite(p.x) &&
+        Number.isFinite(p.y) &&
+        Number.isFinite(p.z)
+      )
+    ) {
+      band.current.geometry.setPoints(pts);
+    } else {
+      // Fallback seguro para que no entre en bucle de NaN
+      band.current.geometry.setPoints(initialPoints);
+    }
+
     if (
       !band.current ||
       !band.current.geometry ||
@@ -172,14 +189,14 @@ function Band({ maxSpeed = 50, minSpeed = 0 }: BandProps) {
     ) {
       return;
     }
-  
+
     const t1 = j1.current.translation?.();
     const t2 = j2.current.translation?.();
     const t3 = j3.current.translation?.();
     const tf = fixed.current.translation?.();
-  
+
     if (!t1 || !t2 || !t3 || !tf) return;
-  
+
     // actualización de lerp
     [j1, j2].forEach((ref) => {
       if (!ref.current.lerped)
@@ -193,15 +210,14 @@ function Band({ maxSpeed = 50, minSpeed = 0 }: BandProps) {
         delta * (minSpeed + clampedDistance * (maxSpeed - minSpeed))
       );
     });
-  
+
     // actualizar curva
     curve.points[0].copy(t3);
     curve.points[1].copy(j2.current.lerped);
     curve.points[2].copy(j1.current.lerped);
     curve.points[3].copy(tf);
-  
+
     // aplicar puntos
-    const pts = curve.getPoints(32);
     if (pts.every(p =>
       Number.isFinite(p.x) &&
       Number.isFinite(p.y) &&
@@ -224,7 +240,7 @@ function Band({ maxSpeed = 50, minSpeed = 0 }: BandProps) {
     new THREE.Vector3(1, 0, 0),
     new THREE.Vector3(1.5, 0, 0),
   ];
-  
+
   return (
     <>
       <group position={isSmall ? [2, 4, 0] : [2, 4, 0]}>
@@ -274,9 +290,9 @@ function Band({ maxSpeed = 50, minSpeed = 0 }: BandProps) {
           </group>
         </RigidBody>
       </group>
-      <mesh ref={band}>
+      <mesh ref={band} raycast={() => null}>
         {/* @ts-ignore */}
-        <meshLineGeometry  points={initialPoints} />
+        <meshLineGeometry points={initialPoints} />
         {/* @ts-ignore */}
         <meshLineMaterial
           color="white"
@@ -287,7 +303,6 @@ function Band({ maxSpeed = 50, minSpeed = 0 }: BandProps) {
           repeat={[-4, 1]}
           lineWidth={isSmall ? 0.5 : 1}
         />
-
       </mesh>
     </>
   );
