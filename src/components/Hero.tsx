@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import LanyardVercel from "./LanyardVercel.jsx"
+// import LanyardVercel from "./LanyardVercel.jsx"
 
 
 const Hero = () => {
@@ -17,7 +17,7 @@ const Hero = () => {
     md:absolute md:inset-0 md:justify-center 
   "
       >
-        <LanyardVercel />
+        {/* <LanyardVercel /> */}
       </div>
 
       {/* Texto */}
