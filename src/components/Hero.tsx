@@ -28,7 +28,8 @@ const Hero = () => {
           flex flex-col items-center text-center justify-center
           px-6 h-full
           md:items-start md:text-left md:px-20
-        "
+          pointer-events-none
+          "
       >
         <h1 className="font-title text-5xl md:text-5xl xl:text-8xl text-[#fff] leading-snug sm:text-center">
           {t("title")}
