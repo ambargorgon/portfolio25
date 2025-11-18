@@ -24,7 +24,7 @@ const projects: Project[] = [
       "Menú digital de restaurante adaptado para personas con discapacidad.",
     about:
       "Diseño y desarrollo de un <1>Menú Digital Accesible</1> para personas con discapacidad, con mejoras de usabilidad e incorporación de contenido en videos de lengua de señas. <br/> También cuenta con usabilidad a través de <1>TalkBack</1>, iconografía personalizada y colores con contrastes <1>AAA</1>. <br/>Construido con React y prototipado en Figma, el proyecto busca brindar acceso igualitario a la información gastronómica.",
-    rol: "Me encargué del diseño teniendo en cuenta las pautas WCAG, y generando <1>+50 iconos vectorizados </1> para la navegación en el menú. <br> Luego, guioné y edité los videos junto a una <1>intérprete de señas</1>. <br>El desarrollo lo llevé a cabo con supervisión de profesionales del área, poniendo el foco en la accesibilidad, creando un menú dinámico en React y asegurando el cumplimiento de las pautas básicas de WCAG.",
+    rol: "Me encargué del diseño teniendo en cuenta las pautas WCAG, y generando <1>+50 iconos vectorizados </1> para la navegación en el menú. <br> Luego, guioné y edité los videos junto a una <1>intérprete de señas</1>. <br>El desarrollo lo llevé a cabo con supervisión de profesionales del área, poniendo el foco en la accesibilidad, creando un menú dinámico y entendible.",
     date: "Julio 2024 - Septiembre 2024",
     team: "Proyecto individual",
     target: "Diseño & Frontend",
